@@ -1,0 +1,12 @@
+# Import partial from functools
+from functools import partial
+percentiles = [1, 10, 25, 50, 75, 90, 99]
+
+# Use a list comprehension to create a partial function for each quantile
+#partial function is to fix some arguments and return a new function
+percentile_functions = [partial(np.percentile, q=percentile) for percentile in percentiles]
+
+# Calculate each of these quantiles on the data using a rolling window
+#rolling 20 numbers and aggregate 7 percentile functions
+prices_perc_rolling = series.rolling(20, min_periods=5, closed='right')
+features_percentiles = series.aggregate(percentile_functions)
